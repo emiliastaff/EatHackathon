@@ -1,0 +1,311 @@
+<title>ShelfPulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: shelf-edge label strip on top (store + question), tabbed workspace below: range review table -> product deep-dive -> archetypes -> method */
+:root{
+  --bg:#F1F3EF; --surface:#FFFFFF; --line:#D9DED6; --ink:#16201D; --soft:#4B5753; --mute:#6B7772;
+  --teal:#0F6E6A; --teal-soft:#E1EFEC; --label:#F2C230; --label-ink:#3A2E00;
+  --good:#2E7D4F; --good-soft:#E3F1E8; --warn:#A6561A; --warn-soft:#F8EADD; --bad:#A23B3B; --bad-soft:#F6E2E2;
+  --track:#E7EAE5;
+  --display:'Bricolage Grotesque', 'Arial Narrow', Arial, sans-serif;
+  --body:'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111816; --surface:#18211E; --line:#2A3531; --ink:#E7ECE9; --soft:#B3BDB9; --mute:#8D9894;
+  --teal:#4FB8B0; --teal-soft:#16302D; --label:#F2C230; --label-ink:#2A2100;
+  --good:#6CC08E; --good-soft:#18301F; --warn:#E3A06B; --warn-soft:#33261A; --bad:#E58A8A; --bad-soft:#382020;
+  --track:#25302C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111816; --surface:#18211E; --line:#2A3531; --ink:#E7ECE9; --soft:#B3BDB9; --mute:#8D9894;
+  --teal:#4FB8B0; --teal-soft:#16302D; --label:#F2C230; --label-ink:#2A2100;
+  --good:#6CC08E; --good-soft:#18301F; --warn:#E3A06B; --warn-soft:#33261A; --bad:#E58A8A; --bad-soft:#382020;
+  --track:#25302C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* shelf-edge strip */
+.strip{background:var(--label);color:var(--label-ink);padding-block:18px}
+.strip .wrap{display:flex;gap:20px 32px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding-block:0}
+.brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.brand h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
+.brand p{margin:0;font-size:15px;max-width:52ch}
+.seg{display:flex;flex-wrap:wrap;background:rgba(0,0,0,.08);border-radius:10px;padding:3px;gap:3px}
+.seg button{font:inherit;font-size:14px;font-weight:600;border:0;background:none;color:inherit;padding:8px 12px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--label-ink);color:var(--label)}
+button:focus-visible,select:focus-visible,input:focus-visible,[role=tab]:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-block:24px 24px;overflow-x:auto}
+nav button{font:inherit;font-weight:600;color:var(--soft);background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--teal)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.stat b{display:block;font-family:var(--mono);font-size:24px;font-weight:500}
+.stat span{font-size:13px;color:var(--mute)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.stack{display:grid;gap:16px}
+.lede{color:var(--soft);max-width:70ch;margin:6px 0 0}
+
+/* table */
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--teal-soft)}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.v-stock{background:var(--good-soft);color:var(--good)} .v-fix{background:var(--warn-soft);color:var(--warn)} .v-review{background:var(--bad-soft);color:var(--bad)}
+.mini{display:flex;gap:3px;align-items:end;height:26px}
+.mini i{display:block;width:9px;background:var(--teal);border-radius:2px 2px 0 0;opacity:.85}
+.fitcell{display:flex;align-items:center;gap:10px;min-width:140px}
+.fitbar{flex:1;height:8px;background:var(--track);border-radius:4px;overflow:hidden}
+.fitbar i{display:block;height:100%;background:var(--teal)}
+
+/* bars */
+.bars{display:grid;gap:9px}
+.bar{display:grid;grid-template-columns:minmax(120px,190px) 1fr 44px;gap:10px;align-items:center;font-size:14px}
+.track{height:18px;background:var(--track);border-radius:5px;overflow:hidden}
+.fill{height:100%;background:var(--teal);border-radius:5px}
+.fill.hi{background:var(--label)}
+.bar .v{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.head{display:flex;gap:16px;align-items:end;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}
+select{font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);max-width:100%}
+.big{font-family:var(--mono);font-size:44px;line-height:1}
+.big small{font-size:16px;color:var(--mute)}
+.card{border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.card b{display:block;margin-bottom:2px}
+.card.gap{border-left:4px solid var(--warn)}
+.card.win{border-left:4px solid var(--good)}
+.quote{border-radius:10px;padding:12px 14px;background:var(--teal-soft)}
+.quote.neg{background:var(--bad-soft)}
+.quote .meta{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.sliders{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.sliders label{font-size:13px;color:var(--soft);display:block}
+.sliders input{width:100%;accent-color:var(--teal)}
+.matrix td,.matrix th{text-align:center} .matrix td:first-child,.matrix th:first-child{text-align:left}
+.yes{color:var(--teal);font-weight:600}
+.formula{font-family:var(--mono);font-size:13.5px;background:var(--teal-soft);border-radius:8px;padding:12px 14px;line-height:1.7;overflow-x:auto}
+ul.plain{margin:0;padding-left:18px;color:var(--soft)} ul.plain li{margin-bottom:6px}
+.note{font-size:13px;color:var(--mute)}
+@media (max-width:820px){.cols,.sliders{grid-template-columns:1fr}.big{font-size:36px}}
+@media (prefers-reduced-motion:no-preference){.fill,.fitbar i{transition:width .35s ease}}
+</style>
+
+<header class="strip">
+  <div class="wrap">
+    <div class="brand"><h1>ShelfPulse</h1><p>What happens to my category if I say yes? Who chooses each product, why, and what to change.</p></div>
+    <div>
+      <div class="eyebrow" style="color:inherit;opacity:.75;margin-bottom:4px" id="store-label">Store format</div>
+      <div class="seg" id="stores" role="group" aria-labelledby="store-label"></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav role="tablist" id="tabs">
+    <button role="tab" aria-selected="true" data-tab="range" id="t-range">Range review</button>
+    <button role="tab" aria-selected="false" data-tab="product" id="t-product">Product deep-dive</button>
+    <button role="tab" aria-selected="false" data-tab="archetypes" id="t-archetypes">Shopper archetypes</button>
+    <button role="tab" aria-selected="false" data-tab="method" id="t-method">Method &amp; limits</button>
+  </nav>
+
+  <!-- RANGE REVIEW -->
+  <section id="range" role="tabpanel" aria-labelledby="t-range">
+    <div class="stats" id="stats"></div>
+    <div class="panel">
+      <div class="head"><div><h2 style="font-size:24px">Range review</h2>
+        <p class="lede" id="range-lede"></p></div></div>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Product</th><th>Verdict</th><th>Fit here</th><th>By archetype</th><th>Biggest gap</th><th class="num">Reviews</th></tr></thead>
+        <tbody id="range-body"></tbody>
+      </table></div>
+      <p class="note" style="margin-top:12px">Verdicts rank products against the rest of this range in the selected store format: top third Stock, middle third Stock with fixes, bottom third Review listing. Select a row to open its deep-dive.</p>
+    </div>
+  </section>
+
+  <!-- PRODUCT -->
+  <section id="product" role="tabpanel" aria-labelledby="t-product" hidden>
+    <div class="head">
+      <div style="min-width:0"><label class="eyebrow" for="pick">Product</label><br><select id="pick"></select></div>
+      <div style="text-align:right"><div class="eyebrow">Fit in this store</div><div class="big" id="p-fit"></div></div>
+    </div>
+    <div class="stack">
+      <div class="cols">
+        <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Fit by archetype</div><div class="bars" id="p-arch"></div>
+          <p class="note" id="p-best"></p></div>
+        <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Same product, different store</div><div class="bars" id="p-store"></div>
+          <p class="note">Shopper mix changes the answer even when the product doesn't.</p></div>
+      </div>
+      <div class="cols">
+        <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Biggest gaps and what to change</div><div class="stack" style="gap:10px" id="p-gaps"></div></div>
+        <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Why it wins here</div><div class="stack" style="gap:10px" id="p-wins"></div></div>
+      </div>
+      <div class="panel"><div class="eyebrow" style="margin-bottom:10px">What real shoppers said</div><div class="stack" style="gap:10px" id="p-quotes"></div></div>
+      <div class="cols">
+        <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Driver signals, 0 to 1</div><div class="bars" id="p-sig"></div></div>
+        <div class="panel"><div class="eyebrow" style="margin-bottom:10px">Shopper mix in this store (adjustable)</div>
+          <div class="sliders" id="sliders"></div>
+          <p class="note" id="mix-note"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHETYPES -->
+  <section id="archetypes" role="tabpanel" aria-labelledby="t-archetypes" hidden>
+    <div class="stack">
+      <div class="cols" id="arch-cards" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"></div>
+      <div class="panel"><h2 style="font-size:22px">What each archetype cares about</h2>
+        <p class="lede">From a product-head interview. Every one of the 2,048 on/off combinations of these 11 drivers maps to its nearest archetype in the full dataset.</p>
+        <div class="tablewrap" style="margin-top:14px"><table class="matrix" id="matrix"></table></div></div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section id="method" role="tabpanel" aria-labelledby="t-method" hidden>
+    <div class="stack">
+      <div class="panel"><h2 style="font-size:22px">How a score is made</h2>
+        <div class="formula" style="margin-top:12px">
+          signal(product, driver) = 0.6 × listing claims it + 0.4 × min(1, 3 × share of reviews mentioning it)<br>
+          fit(product, archetype) = mean of signals over the drivers that archetype cares about<br>
+          store fit = Σ shopper mix(archetype) × fit(product, archetype)<br>
+          gap(driver) = importance in this store × (1 − signal) → ranked recommendations</div></div>
+      <div class="cols">
+        <div class="panel"><h3 style="font-size:18px;margin-bottom:10px">Data used</h3><ul class="plain" id="sources"></ul></div>
+        <div class="panel"><h3 style="font-size:18px;margin-bottom:10px">Assumptions and limits</h3><ul class="plain">
+          <li>The 3 archetypes come from a product-head interview. They are hypotheses, not measured segments.</li>
+          <li>Store shopper mixes are starting values. Adjust them on the deep-dive.</li>
+          <li>Signals come from keyword rules on listings and reviews; design and coolness are only partly visible in text.</li>
+          <li id="skew"></li>
+          <li>Reviews show who bought, not who drank it. Gifting and household buying blur shopper and consumer.</li></ul></div>
+      </div>
+      <div class="panel"><h3 style="font-size:18px;margin-bottom:10px">Making it real</h3><ul class="plain">
+        <li><b>Data ownership:</b> swap scraped reviews for consented Watch Humans video reviews, which capture what nearly won and why.</li>
+        <li><b>Privacy:</b> no reviewer names or IDs are stored; brands see aggregates and anonymised quotes only.</li>
+        <li><b>Calibration:</b> fit the archetype weights and store mixes to sell-through and loyalty data from a retail partner, then test predictions on the next range review.</li>
+        <li><b>Cost and scale:</b> tagging runs at pennies per thousand reviews; the same pipeline works for any category with reviews.</li></ul></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const D = DATA.drivers, LABEL = DATA.driver_labels, FIX = DATA.fixes, A = DATA.archetypes, STORES = DATA.store_mixes;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = v => Math.round(v * 100);
+let store = Object.keys(STORES)[0], custom = null, current = DATA.products[0]?.id;
+
+const mixFor = s => custom || STORES[s].mix;
+const fit = (p, a) => { const c = D.filter((d,i) => a.v[i]); return c.length ? c.reduce((t,d) => t + p.signals[d], 0) / c.length : 0; };
+const storeFit = (p, mix) => A.reduce((t,a) => t + mix[a.code] * fit(p, a), 0);
+const importance = mix => Object.fromEntries(D.map((d,i) => [d, A.reduce((t,a) => t + mix[a.code] * a.v[i], 0)]));
+
+function bars(el, rows, max, hi){ $(el).innerHTML = rows.map(([l,v,fmt],i) => `<div class="bar"><span>${esc(l)}</span>
+  <div class="track"><div class="fill ${i===hi?'hi':''}" style="width:${Math.max(0,Math.min(100,v/max*100))}%"></div></div>
+  <span class="v">${fmt ?? v}</span></div>`).join(""); }
+
+function renderStores(){
+  $("stores").innerHTML = Object.entries(STORES).map(([k,s]) => `<button aria-pressed="${k===store}" data-s="${k}">${esc(s.label)}</button>`).join("");
+}
+$("stores").addEventListener("click", e => { const b = e.target.closest("button"); if(!b) return; store = b.dataset.s; custom = null; renderStores(); renderAll(); });
+
+document.getElementById("tabs").addEventListener("click", e => { const b = e.target.closest("[role=tab]"); if(b) showTab(b.dataset.tab); });
+function showTab(t){ document.querySelectorAll("[role=tab]").forEach(b => b.setAttribute("aria-selected", b.dataset.tab===t));
+  document.querySelectorAll("[role=tabpanel]").forEach(p => p.hidden = p.id !== t); }
+
+function renderStats(){
+  const s = DATA.stats;
+  const items = [[s.products,"products analysed"],[s.reviews.toLocaleString(),"real shopper reviews"],[s.avg_rating.toFixed(2)+"★","average rating"],
+    [s.pct_five+"%","five-star (positivity skew)"],[s.median_days ?? "–","median days, purchase to review"],[s.low_reviews,"reviews at 3★ or below"]];
+  $("stats").innerHTML = items.map(([b,t]) => `<div class="stat"><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join("");
+  $("skew").textContent = `Reviews skew positive (${s.pct_five}% five-star), so rejection signals are under-represented. Low-rated reviews are surfaced on purpose.`;
+  $("sources").innerHTML = DATA.sources.map(x => `<li>${esc(x)}</li>`).join("");
+}
+
+function renderRange(){
+  const mix = mixFor(store), imp = importance(mix);
+  const rows = DATA.products.map(p => {
+    const f = storeFit(p, mix);
+    const g = D.slice().sort((a,b) => imp[b]*(1-p.signals[b]) - imp[a]*(1-p.signals[a]))[0];
+    return {p, f, g};
+  }).sort((a,b) => b.f - a.f);
+  const n = rows.length;
+  $("range-lede").textContent = `${n} products ranked for ${STORES[store].label} stores. Shopper mix: ` +
+    A.map(a => `${pct(mix[a.code])}% ${a.title}`).join(", ") + ".";
+  $("range-body").innerHTML = rows.map((r,i) => {
+    const v = i < n/3 ? ["Stock","v-stock"] : i < 2*n/3 ? ["Stock with fixes","v-fix"] : ["Review listing","v-review"];
+    const mini = A.map(a => `<i title="${esc(a.title)}: ${pct(fit(r.p,a))}" style="height:${Math.max(3,fit(r.p,a)*26)}px"></i>`).join("");
+    return `<tr data-id="${esc(r.p.id)}" tabindex="0"><td style="min-width:200px"><b>${esc(r.p.title)}</b><br><span class="note">${esc(r.p.type)}${r.p.unit_price ? " · £"+r.p.unit_price.toFixed(2)+" per unit" : ""}</span></td>
+      <td><span class="pill ${v[1]}">${v[0]}</span></td>
+      <td><div class="fitcell"><div class="fitbar"><i style="width:${pct(r.f)}%"></i></div><span class="num">${pct(r.f)}</span></div></td>
+      <td><div class="mini" aria-label="Fit by archetype">${mini}</div></td>
+      <td style="min-width:160px">${esc(LABEL[r.g])}</td>
+      <td class="num">${r.p.n_reviews}</td></tr>`;
+  }).join("");
+}
+function openRow(e){ const tr = e.target.closest("tr[data-id]"); if(!tr) return; current = tr.dataset.id; $("pick").value = current; renderProduct(); showTab("product"); window.scrollTo({top:0}); }
+$("range-body").addEventListener("click", openRow);
+$("range-body").addEventListener("keydown", e => { if(e.key === "Enter") openRow(e); });
+
+function renderSliders(){
+  const mix = mixFor(store);
+  $("sliders").innerHTML = A.map(a => `<div><label for="mx-${a.code}">${esc(a.title)}</label>
+    <input type="range" min="0" max="100" id="mx-${a.code}" value="${pct(mix[a.code])}"><span class="num note" id="mv-${a.code}">${pct(mix[a.code])}%</span></div>`).join("");
+  $("mix-note").textContent = custom ? "Custom mix, normalised to 100%. Pick a store format above to reset." : `Default mix for ${STORES[store].label}. Drag to test a different shopper base.`;
+}
+$("sliders").addEventListener("change", () => {
+  const raw = Object.fromEntries(A.map(a => [a.code, +$("mx-"+a.code).value]));
+  const t = Object.values(raw).reduce((x,y) => x+y, 0) || 1;
+  custom = Object.fromEntries(A.map(a => [a.code, raw[a.code]/t]));
+  renderAll();
+});
+
+function renderProduct(){
+  const p = DATA.products.find(x => x.id === current) || DATA.products[0]; if(!p) return;
+  const mix = mixFor(store), imp = importance(mix);
+  const fits = A.map(a => [a.title, pct(fit(p,a))]);
+  const best = fits.reduce((m,x) => x[1] > m[1] ? x : m);
+  $("p-fit").innerHTML = `${pct(storeFit(p,mix))}<small> /100</small>`;
+  bars("p-arch", fits, 100, fits.indexOf(best));
+  $("p-best").textContent = `Strongest with ${best[0]}. ${p.n_reviews} reviews · ${p.avg_rating ? p.avg_rating.toFixed(1)+"★ average" : "no ratings yet"}.`;
+  const sk = Object.keys(STORES);
+  bars("p-store", sk.map(k => [STORES[k].label, pct(storeFit(p, STORES[k].mix))]), 100, custom ? -1 : sk.indexOf(store));
+  const order = D.slice().sort((a,b) => imp[b]*(1-p.signals[b]) - imp[a]*(1-p.signals[a]));
+  const wins = D.slice().sort((a,b) => imp[b]*p.signals[b] - imp[a]*p.signals[a]);
+  $("p-gaps").innerHTML = order.slice(0,3).map(d => `<div class="card gap"><b>${esc(LABEL[d])}</b>
+    <span class="note">Signal ${pct(p.signals[d])}/100 · matters to ${pct(imp[d])}% of shoppers here</span><br>${esc(FIX[d])}</div>`).join("");
+  $("p-wins").innerHTML = wins.slice(0,3).map(d => `<div class="card win"><b>${esc(LABEL[d])}</b>
+    <span class="note">Signal ${pct(p.signals[d])}/100 · matters to ${pct(imp[d])}% of shoppers here</span></div>`).join("");
+  const qs = []; const seen = new Set();
+  for(const d of [...wins.slice(0,3), ...order.slice(0,3)]){ const q = p.quotes[d]; if(q && !seen.has(q.quote)){ seen.add(q.quote); qs.push([LABEL[d], q, false]); } }
+  if(p.low_quote && !seen.has(p.low_quote.quote)) qs.push(["Rejection signal", p.low_quote, true]);
+  $("p-quotes").innerHTML = qs.length ? qs.slice(0,5).map(([l,q,neg]) => `<div class="quote ${neg?'neg':''}"><div class="meta">${esc(l)} · ${esc(q.rating)}★${q.verified?' · verified':''} · ${esc(q.date)}</div>“${esc(q.quote)}”</div>`).join("")
+    : `<p class="note">No reviews mention these drivers yet.</p>`;
+  bars("p-sig", D.map(d => [LABEL[d], p.signals[d], p.signals[d].toFixed(2)]), 1, -1);
+  renderSliders();
+}
+$("pick").addEventListener("change", e => { current = e.target.value; renderProduct(); });
+
+function renderArchetypes(){
+  $("arch-cards").innerHTML = A.map(a => `<div class="panel"><div class="eyebrow">Archetype ${esc(a.code)}</div>
+    <h3 style="font-size:20px;margin:4px 0 6px">${esc(a.title)}</h3><p style="margin:0;color:var(--soft)">${esc(a.description)}</p></div>`).join("");
+  $("matrix").innerHTML = `<thead><tr><th>Driver</th>${A.map(a => `<th>${esc(a.title)}</th>`).join("")}</tr></thead><tbody>` +
+    D.map((d,i) => `<tr style="cursor:default"><td>${esc(LABEL[d])}</td>${A.map(a => a.v[i] ? `<td class="yes">Matters</td>` : `<td class="note">–</td>`).join("")}</tr>`).join("") + `</tbody>`;
+}
+
+function renderAll(){ renderRange(); renderProduct(); }
+$("pick").innerHTML = DATA.products.slice().sort((a,b) => b.n_reviews - a.n_reviews).map(p => `<option value="${esc(p.id)}">${esc(p.title)} (${p.n_reviews} reviews)</option>`).join("");
+current = DATA.products.slice().sort((a,b) => b.n_reviews - a.n_reviews)[0]?.id;
+$("pick").value = current;
+renderStores(); renderStats(); renderArchetypes(); renderAll();
+const h = location.hash.slice(1); if(["range","product","archetypes","method"].includes(h)) showTab(h);
+</script>

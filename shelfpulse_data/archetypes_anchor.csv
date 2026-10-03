@@ -1,0 +1,4 @@
+archetype_code,title,description,cost,medical,dietary,nutrition,design,curiosity,coolness,seasonal,eco_friendly,trendsetter,mood,drivers_that_matter
+A,Value-Savvy Explorer,"Price-aware but curious; buys on design, coolness, diet & nutrition and eco credentials. Ignores medical claims, seasons, trends and mood.",1,0,1,1,1,1,1,0,1,0,0,7
+B,Premium Wellness Enthusiast,"Not price-sensitive; every signal counts, especially medical/functional claims, seasonality, trends and mood. High-engagement, high-basket.",0,1,1,1,1,1,1,1,1,1,1,10
+C,Seasonal Mood Shopper,"Price-aware and driven by moment and mood; follows trends, seasons and eco cues. Not swayed by health claims, design or novelty.",1,0,0,0,0,0,0,1,1,1,1,5

@@ -1,0 +1,60 @@
+product_id,title,product_type,fit_Value-Savvy Explorer,fit_Premium Wellness Enthusiast,fit_Seasonal Mood Shopper,best_anchor_archetype,best_match_archetype_id,best_match_title,best_match_fit
+15814225101184,Productivity Drink - White Peach,Productivity Drink,0.314,0.34,0.52,Seasonal Mood Shopper,ARC-1028,Budget Trend Mood Buyer,0.867
+15688841298304,Creatine Sticks - Strawberry Lime (7 pack) [US],Creatine,0.286,0.3,0.4,Seasonal Mood Shopper,ARC-1155,Budget Nutrition Follower,1.0
+15688829534592,Creatine Sticks - Pineapple (7 pack) [US],Creatine,0.229,0.22,0.4,Seasonal Mood Shopper,ARC-1155,Budget Nutrition Follower,0.867
+15688814068096,Creatine Sachets - Strawberry Lime (7 Pack),Creatine,0.229,0.22,0.4,Seasonal Mood Shopper,ARC-1155,Budget Nutrition Follower,0.867
+15688807678336,Creatine Sachets - Pineapple (7 Pack),Creatine,0.229,0.22,0.4,Seasonal Mood Shopper,ARC-1155,Budget Nutrition Follower,0.867
+15310275805568,Creatine Sachets - Unflavoured (30 Pack),Creatine,0.301,0.208,0.22,Value-Savvy Explorer,ARC-1665,Budget Wellness Tracker,0.96
+15134384619904,Focus Blend - Watermelon Mint,Focus Blend,0.351,0.359,0.052,Premium Wellness Enthusiast,ARC-0833,Premium Wellness Label Reader,0.867
+15780916232576,Focus Pouch Single - Fresh Mint [US],Focus Pouches,0.324,0.336,0.436,Seasonal Mood Shopper,ARC-1059,Budget Explorer Follower,1.0
+15310278951296,Creatine Sachets - Pineapple (30 Pack),Creatine,0.31,0.227,0.244,Value-Savvy Explorer,ARC-1665,Budget Wellness Tracker,1.0
+15310281998720,Creatine Sachets - Strawberry Lime (30 Pack),Creatine,0.299,0.205,0.226,Value-Savvy Explorer,ARC-1665,Budget Wellness Tracker,0.927
+15310297563520,Creatine Sticks - Unflavoured (30 Pack) [AU],Creatine,0.286,0.2,0.2,Value-Savvy Explorer,ARC-1665,Budget Wellness Tracker,1.0
+15780911546752,Focus Pouch Single - Fresh Mint,Focus Pouches,0.296,0.32,0.456,Seasonal Mood Shopper,ARC-1539,Budget Wellness Follower,0.997
+15513143378304,Productivity Drink - Mixed Flavors,Productivity Drink,0.161,0.153,0.426,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.8
+15549988667776,Smarter Energy Drink - Tropical Ice,Productivity Drink,0.327,0.306,0.39,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.907
+15549992698240,Smarter Energy Drink - Orange Sunrise,Productivity Drink,0.334,0.316,0.414,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.913
+15438378172800,All-Day Productivity Bundle,,0.0,0.06,0.12,Seasonal Mood Shopper,ARC-0008,Premium Trend Mood Buyer,0.2
+15413411971456,All-Day Energy Bundle,,0.0,0.06,0.12,Seasonal Mood Shopper,ARC-0008,Premium Trend Mood Buyer,0.2
+15413417509248,Ultimate Body + Brain Bundle,,0.0,0.06,0.0,Premium Wellness Enthusiast,ARC-0516,Premium Wellness Follower,0.2
+15438379614592,Best Sellers Bundle,,0.0,0.0,0.0,Value-Savvy Explorer,ARC-1024,Premium Wellness Enthusiast,0.0
+15431114916224,Workday Focus Bundle,,0.0,0.06,0.0,Premium Wellness Enthusiast,ARC-0516,Premium Wellness Follower,0.2
+15413390475648,All-Day Energy Bundle,,0.0,0.06,0.12,Seasonal Mood Shopper,ARC-0008,Premium Trend Mood Buyer,0.2
+15481952665984,Productivity Drink - 48 cans,Productivity Drink,0.143,0.06,0.32,Seasonal Mood Shopper,ARC-1028,Budget Trend Mood Buyer,0.533
+15431085654400,All-Day Productivity Bundle,,0.0,0.06,0.12,Seasonal Mood Shopper,ARC-0008,Premium Trend Mood Buyer,0.2
+15431088177536,Performance & Focus Variety Bundle,,0.0,0.06,0.0,Premium Wellness Enthusiast,ARC-0516,Premium Wellness Follower,0.2
+15413395751296,Ultimate Body + Brain Bundle,,0.0,0.06,0.0,Premium Wellness Enthusiast,ARC-0516,Premium Wellness Follower,0.2
+15431091782016,Best Sellers Bundle,,0.0,0.0,0.0,Value-Savvy Explorer,ARC-1024,Premium Wellness Enthusiast,0.0
+15471063859584,Focus Pouches - Fresh Mint,Focus Pouches,0.247,0.267,0.056,Premium Wellness Enthusiast,ARC-0801,Premium Wellness Label Reader,0.79
+15470978269568,Focus Pouches - Fresh Mint [US],Focus Pouches,0.41,0.455,0.19,Premium Wellness Enthusiast,ARC-0546,Premium Wellness Explorer,0.83
+15470854078848,Nootropicks - 5 Pack,Nootropicks,0.143,0.06,0.2,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.533
+15470829994368,Nootropicks - 5 Pack [US],Nootropicks,0.143,0.06,0.2,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.533
+15431118389632,Focus Duo Bundle,,0.0,0.06,0.0,Premium Wellness Enthusiast,ARC-0516,Premium Wellness Follower,0.2
+15413386936704,Performance & Focus Bundle,,0.057,0.14,0.16,Seasonal Mood Shopper,ARC-0518,Premium Wellness Mood Buyer,0.467
+15438382825856,Focus Duo Bundle,,0.0,0.06,0.0,Premium Wellness Enthusiast,ARC-0516,Premium Wellness Follower,0.2
+15413410431360,Performance & Focus Bundle,,0.0,0.06,0.0,Premium Wellness Enthusiast,ARC-0516,Premium Wellness Follower,0.2
+15386787873152,Brain Capsules [AE],Brain Capsules,0.171,0.24,0.12,Premium Wellness Enthusiast,ARC-0898,Premium Wellness Tracker,0.6
+9149208985908,Brain Capsules,Brain Capsules,0.133,0.231,0.114,Premium Wellness Enthusiast,ARC-0770,Premium Wellness Label Reader,0.653
+15413413839232,Caffeine-Free All-Day Energy Bundle,,0.086,0.12,0.12,Premium Wellness Enthusiast,ARC-0260,Premium Diet-Led Follower,0.4
+15413393260928,Caffeine-Free All-Day Energy Bundle,,0.086,0.12,0.12,Premium Wellness Enthusiast,ARC-0260,Premium Diet-Led Follower,0.4
+15310255653248,Creatine Sticks - Strawberry Lime (30 Pack) [US],Creatine,0.371,0.26,0.2,Value-Savvy Explorer,ARC-1665,Budget Wellness Tracker,1.0
+15310255194496,Creatine Sticks - Pineapple (30 Pack) [US],Creatine,0.371,0.26,0.2,Value-Savvy Explorer,ARC-1665,Budget Wellness Tracker,1.0
+15310255128960,Creatine Sticks - Unflavored (30 Pack) [US],Creatine,0.429,0.3,0.2,Value-Savvy Explorer,ARC-1217,Budget Nutrition Design Buyer,1.0
+15351561519488,Productivity Drink - Mixed Flavours,Productivity Drink,0.196,0.156,0.404,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.723
+15193429967232,Productivity Drink - Strawberry Lemonade [US],Productivity Drink,0.247,0.26,0.4,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.957
+15202964930944,Productivity Drink - Strawberry Lemonade,Productivity Drink,0.283,0.308,0.454,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,1.0
+15135241765248,Productivity Drink - Blue Raspberry [US],Productivity Drink,0.241,0.244,0.374,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.917
+15202956968320,Productivity Drink - Blue Raspberry,Productivity Drink,0.251,0.239,0.388,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.86
+15134387929472,Focus Blend - Watermelon Mint [US],Focus Blend,0.257,0.28,0.0,Premium Wellness Enthusiast,ARC-0673,Premium Wellness Tracker,0.733
+15082705158528,Focus Blend Starter Pack,Focus Blend,0.343,0.3,0.0,Value-Savvy Explorer,ARC-0481,Premium Nutrition Label Reader,0.6
+9149210460468,Focus Blend - Peach Mango,Focus Blend,0.229,0.29,0.08,Premium Wellness Enthusiast,ARC-0833,Premium Wellness Label Reader,0.833
+9149209608500,Focus Blend - Wild Berry,Focus Blend,0.349,0.365,0.074,Premium Wellness Enthusiast,ARC-0801,Premium Wellness Label Reader,0.837
+9143261135156,Focus Blend - Wild Berry [US],Focus Blend,0.257,0.304,0.048,Premium Wellness Enthusiast,ARC-0673,Premium Wellness Tracker,0.733
+9143260905780,Focus Blend - Peach Mango [US],Focus Blend,0.247,0.3,0.108,Premium Wellness Enthusiast,ARC-0897,Premium Wellness Tracker,0.777
+9143261266228,Brain Capsules [US],Brain Capsules,0.244,0.365,0.222,Premium Wellness Enthusiast,ARC-0642,Premium Wellness Tracker,0.847
+8799704154420,Productivity Drink - Tropical Ice [US],Productivity Drink,0.256,0.276,0.424,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.99
+8400185033012,Productivity Drink - Tropical Ice,Productivity Drink,0.297,0.317,0.448,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,1.0
+8758066512180,Productivity Drink - Wild Citrus [US],Productivity Drink,0.371,0.34,0.4,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.933
+8758066053428,Productivity Drink - Orange Sunrise [US],Productivity Drink,0.283,0.278,0.422,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.92
+8400184672564,Productivity Drink - Wild Citrus,Productivity Drink,0.33,0.291,0.354,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.867
+8400184410420,Productivity Drink - Orange Sunrise,Productivity Drink,0.254,0.256,0.392,Seasonal Mood Shopper,ARC-1538,Budget Wellness Mood Buyer,0.91
